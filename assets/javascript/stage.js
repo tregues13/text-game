@@ -24,7 +24,12 @@ class Stage{
 
     upDate(){
         this.items.forEach(element => {
+
             let dataEl = element.dataset.stats;
+
+            if(dataEl in pistol){
+                element.innerHTML = pistol[dataEl];
+            }
 
             if(dataEl in playerOne){
                 element.innerHTML = playerOne[dataEl];

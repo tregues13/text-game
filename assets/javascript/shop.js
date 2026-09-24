@@ -4,4 +4,5 @@ class Shop{
         this.buyEl = buyEl;
         this.sectionW = sectionWindons;
     }
+    
 }
