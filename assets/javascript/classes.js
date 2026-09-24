@@ -27,6 +27,8 @@ const shop = new Shop(
 
 let enemyOne;
 
+const action = document.querySelectorAll('.button');
+const section = document.querySelectorAll(".section")
 const logbatle = [
 "O vento levanta a poeira da estrada enquanto sua mão repousa sobre o cabo da arma. O desconhecido à sua frente cospe no chão e sorri de lado. Ninguém diz uma palavra. O próximo som pode ser um tiro.",
 "O silêncio das montanhas é quebrado por um estalo metálico. Antes que você consiga reagir, sombras surgem entre as rochas. Armas são apontadas em sua direção. Você caiu numa emboscada.",
@@ -67,7 +69,7 @@ document.querySelectorAll('.pause').forEach(element => {
     })
 })
 
-document.querySelectorAll('.button').forEach(element => {
+action.forEach(element => {
     element.addEventListener('click',() => {
         let weapon = inventorys.weapons[element.dataset.item];
         
@@ -79,3 +81,15 @@ document.querySelectorAll('.button').forEach(element => {
         stage.pause();
     })
 });
+
+section.forEach(element =>{
+    element.classList.remove('select')
+    element.addEventListener("click", () =>{
+        let data = element.dataset.section;
+        shop.section(data,element);
+    })
+})
+
+shop.buyEl.forEach(element => {
+    element.addEventListener('click', () => shop.update (element));
+})
