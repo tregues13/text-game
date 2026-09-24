@@ -22,7 +22,9 @@ const stage = new Stage(
 const shop = new Shop(
     document.querySelector('.bateryshop'),
     document.querySelector('.slider'),
-    document.querySelectorAll('.buy')
+    document.querySelectorAll('.buy'),
+    document.querySelectorAll('.arrow'),
+    document.querySelectorAll('.description')
 );
 
 let enemyOne;
@@ -83,7 +85,6 @@ action.forEach(element => {
 });
 
 section.forEach(element =>{
-    element.classList.remove('select')
     element.addEventListener("click", () =>{
         let data = element.dataset.section;
         shop.section(data,element);
@@ -92,4 +93,8 @@ section.forEach(element =>{
 
 shop.buyEl.forEach(element => {
     element.addEventListener('click', () => shop.update (element));
+})
+
+document.querySelectorAll(".items-content").forEach(element => {
+    element.addEventListener("click", () => shop.products(element))
 })
