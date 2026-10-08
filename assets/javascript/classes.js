@@ -4,7 +4,17 @@ const manipulationArea = new Windon(
     document.querySelectorAll('.windons'),
 )
 
-const pistol = new weapon('pistol',5,6,6,0.15,2);
+const pistol = new Weapon('pistol',5,0.15,2,0,0,6,6);
+const knife = new Weapon('knife',3,0.40,1.5,0,0,Infinity,Infinity);
+
+const shotgun = new Weapon('shotgun',10,0.25,2.3,75,2,Infinity,Infinity);
+const machineGun = new Weapon('RifleA',3,0.33,2,115,4,Infinity,Infinity);
+const precisionRifle = new Weapon('Rifleb',25,0.50,2.5,175,5,Infinity,Infinity);
+
+const medic = new items('Medic',2,15);
+const stimulating = new items('stimulating',0,40);
+const defense = new items('Colete',0,30);
+
 const inventorys = new inventory();
 
 const playerOne = new Player('cypher');
@@ -16,7 +26,8 @@ const stage = new Stage(
     document.querySelectorAll('.item'),
     document.querySelector('.reload'),
     document.querySelector('#menu-batlle'),
-    document.querySelector('.buttons')
+    document.querySelector('.buttons'),
+    document.querySelector('.player-panel')
 );
 
 const shop = new Shop(
@@ -24,7 +35,8 @@ const shop = new Shop(
     document.querySelector('.slider'),
     document.querySelectorAll('.buy'),
     document.querySelectorAll('.arrow'),
-    document.querySelectorAll('.description')
+    document.querySelectorAll('.description'),
+    document.querySelectorAll('.verification')
 );
 
 let enemyOne;
@@ -60,10 +72,20 @@ document.querySelectorAll('.pause').forEach(element => {
                 stage.continue();
             break;
 
-            case 'healing':
-                playerOne.healing();
+            case 'reset':
+                stage.reset();
             break;
             
+            case 'item':
+                document.querySelector('#menu-batlle').style.display = 'none';
+                document.querySelector('#menu-items').style.display = 'flex';
+            break;
+
+            case 'back':
+            document.querySelector('#menu-batlle').style.display = 'flex';
+            document.querySelector('#menu-items').style.display = 'none';
+            break;
+
             default:
                 manipulationArea.window(pause)
             break;
@@ -71,16 +93,41 @@ document.querySelectorAll('.pause').forEach(element => {
     })
 })
 
+document.querySelectorAll('.items').forEach(element =>{
+    element.addEventListener('click', () =>{
+        let dataI = element.dataset.item;
+        let object = stage.allItems[dataI];
+        
+        if(object.amount > 0){            
+            switch(dataI){
+                case 'medic':
+                    medic.healing();
+                break;
+
+                case 'defense':
+                    defense.repair();
+                break;
+
+                case 'stimulating':
+                    stimulating.useDrugs();
+                break;
+            }
+        }
+    })
+})
+
 action.forEach(element => {
     element.addEventListener('click',() => {
-        let weapon = inventorys.weapons[element.dataset.item];
-        
-        stage.button = element;
-        stage.weapon = weapon;
+        if(playerOne._life > 0){
+            let weapon = inventorys.weapons[element.dataset.item];
+            
+            stage.button = element;
+            stage.weapon = weapon;
 
-        playerOne.shot();
-        stage.updatabuttons();
-        stage.pause();
+            playerOne.shot();
+            stage.updatabuttons();
+            stage.pause();
+        }
     })
 });
 
@@ -92,7 +139,7 @@ section.forEach(element =>{
 })
 
 shop.buyEl.forEach(element => {
-    element.addEventListener('click', () => shop.update (element));
+    element.addEventListener('click', () => shop.buy(element));
 })
 
 document.querySelectorAll(".items-content").forEach(element => {

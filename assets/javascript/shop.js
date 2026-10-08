@@ -1,14 +1,29 @@
 class Shop{
-    constructor(coinEl,sectionWindons,buyEl,arrowEl,descreptionEl){
+    constructor(coinEl,sectionWindons,buyEl,arrowEl,descreptionEl,verifyEl){
         this.coinEl = coinEl;
         this.buyEl = buyEl;
         this.sectionW = sectionWindons;
         this.arrow = arrowEl;
         this.desc = descreptionEl;
+        this.verifyEl = verifyEl;
+        this.price = 0;
     }
 
     update(){
-        shop.coinEl = playerOne.coin;
+        shop.coinEl.innerText = `${playerOne.coin}`;
+        this.verifyEl.forEach( (element,index) =>{
+            
+            let buyBtn = this.buyEl[index];
+
+            this.price = Number(element.innerText.replace(/\D/g, ''));
+            
+            if(playerOne.coin >= this.price){
+                element.style.color = '#0f0';
+                buyBtn.style.background = '#0f0';
+            } else{
+                element.style.color = '#f00';
+                buyBtn.style.background = '#f00'
+            };})
     }
 
     products(e){
@@ -64,12 +79,46 @@ class Shop{
     }
 
     buy(element){
-        action.forEach(button =>{
-            let dataB = button.dataset.item;
-            let dataEl = element.dataset.buy
+        
+        let dataEl = element.dataset.buy;
+        let dataType = element.dataset.type;
 
-            if(dataB === dataEl){
-                button.style.display = "flex";
-            }
-    })}
+        switch(dataType){
+            case 'weapon':
+                if(!inventorys.weapons[dataEl]){
+            
+                    let weapon = stage.allItems[dataEl];
+
+                    if(playerOne.coin >= weapon.price){
+
+                        playerOne.coin -= weapon.price;
+                        
+                        
+                        action.forEach(button =>{
+                            let dataB = button.dataset.item;
+
+                            if(dataB === dataEl){
+                                button.classList.remove('lock');
+                                inventorys.addInventory(dataB);
+                            }
+                    })
+                    this.update();
+                    }
+                }
+            break;
+
+            case 'several':
+                let item = stage.allItems[dataEl];
+                if(playerOne.coin >= item.price){
+                    item.amount++;
+                }
+            break;
+
+            case 'improvements':
+
+            break;
+        }
+
+        
+    }
 }

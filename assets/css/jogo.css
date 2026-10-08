@@ -115,6 +115,7 @@ button:hover{
 .player-panel{
     display:flex;
     align-items: center;
+    flex-direction: row;
     width: 100vw;
     border-top: 2px solid var(--gold);
     background-color: var(--panel);
@@ -127,7 +128,7 @@ button:hover{
     flex:1
 }
 .division2{
-    flex:4
+    flex:4;
 }
 .division3{
     flex: 1;
@@ -146,22 +147,27 @@ button:hover{
     margin: 10px;
     font-size: 25px;
 }
-#menu-batlle{
-    display: none;
-    flex-wrap: wrap;
+#menu-batlle,#menu-items {
+    display: none; 
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
 }
-.buttons{
-    width: 350px;
+.grid-container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: row;       
+    justify-content: center;     
+    align-items: center;       
+    gap: 20px;                   
+    width: 100%;
+    padding: 16px;
 }
 .action{
     font-size: 30px;
     margin: 10px;
     transition: all 0.15s ease;
+    width: fit-content;
 }
 .action:hover{
     color:var(--text);
@@ -322,9 +328,6 @@ button:hover{
     align-self: flex-end;
     text-align: center;
     margin-bottom: 20px;
-}
-.action.unlocked{
-    display: flex;
 }
 
 /*RESPONSIVIDADE*/

@@ -21,39 +21,56 @@ class Player extends Person{
         super(id);
         this.life = 30;
         this.maxLife = 30;
-        this.defense = 15;
-    }
+        this.coin = 0;
+        this.pa = 0;
+        this.maxDefense = 25;
+        this.defense = this.maxDefense;
 
-    coin = 0;
-    pa = 0;
-    medic = 3;
+        this.tempCritBonus = 0;
+        this.stimTurns = 0;
+    }
 
     shot(){
 
         let number = Math.random();
         var damageProcess;
+        let multiplier;
         if(this.life > 0 && enemyOne.life > 0){
             if(stage.weapon.currentAmmo >= 1){
                 if(number <= stage.weapon.criticalChance){
-                    damageProcess = stage.weapon.damage * stage.weapon.criticalMultiplier;
+                    multiplier = stage.weapon.criticalMultiplier + this.tempCritBonus;
+                    damageProcess = Math.round(stage.weapon.damage * multiplier);
                 } else{
-                    damageProcess = stage.weapon.damage
+                    multiplier = 1 + this.tempCritBonus;
+                    damageProcess = Math.round(stage.weapon.damage * multiplier);
                 }
-            
-                enemyOne.life -= damageProcess;
-                stage.weapon.currentAmmo --;
-                playerOne.pa ++;
+                
+                switch(stage.weapon.name){
+                    case 'pistol':
+                        stage.weapon.currentAmmo--;
+                        enemyOne.life -= damageProcess;
+                        playerOne.pa ++;
+                    break;
+                    case 'knife':
+                        enemyOne.life -= damageProcess;
+                        playerOne.pa ++;
+                    break;
+                    case 'shotgun':
+                        if(playerOne.pa >= stage.weapon.paCust){
+                            enemyOne.life -= damageProcess;
+                            playerOne.pa -= stage.weapon.paCust;
+                        };
+                    break;
+                }
+                
+                if(this.stimTurns > 0){
+                    this.stimTurns--;
+                }else{
+                    this.tempCritBonus = 0;
+                }
                 stage.battle();
             }
         } 
-    }
-
-    healing(){
-        if(this.life < this.maxLife){
-        this.medic --;
-        this.life = this.maxLife;
-        stage.upDate();
-        }
     }
 
     get def(){
@@ -64,17 +81,61 @@ class Player extends Person{
     }
 };
 
-class inventory {
-    constructor(item){
-        this.weapon = item;
+class items {
+    constructor(name,amount,price){
+        this.name = name;
+        this.amount = amount;
+        this.price = price;
+        this.efect = false;   
     }
-    weapons = {
-        pistol,
+
+    healing(){
+        if(playerOne.life < playerOne.maxLife){
+        this.amount --;
+        playerOne.life = playerOne.maxLife;
+        stage.upDate();
+        }
+    }
+
+    repair(){
+        if(playerOne.defense <= 0){
+            this.amount --;
+            playerOne.defense = playerOne.maxDefense;
+            stage.upDate();
+        }
+    }
+
+    useDrugs(){
+        if(this.efect != true){
+            this.amount --;
+            playerOne.tempCritBonus = 0.35;
+            playerOne.stimTurns = 2;
+            this.efect = true;
+        }
+    }
+}
+class inventory {
+    constructor(){
+        this.weapons = {
+            pistol,
+            knife,
+            };
+    }
+
+    addInventory(weaponR){
+        this.weapons[weaponR] = stage.allWeapons[weaponR]; 
+    }
+    
+    reset(){
+        this.weapons = {
+            pistol,
+            knife,
+            };
     }
 }
 
-class weapon{
-    constructor(name,damage,maxAmmo,currentAmmo,criticalChance,criticalMultiplier,price){
+class Weapon{
+    constructor(name,damage,criticalChance,criticalMultiplier,price,pa,maxAmmo,currentAmmo){
         this.name = name;
         this.damage = damage;
         this.maxAmmo = maxAmmo;
@@ -82,6 +143,7 @@ class weapon{
         this.criticalChance = criticalChance;
         this.criticalMultiplier = criticalMultiplier;
         this.price = price;
+        this.paCust = pa;
     }
 
     reloading(){
@@ -102,24 +164,14 @@ class Enemy extends Person{
     shotgun = 15;
 
     attack(){
-        var number = Math.floor(Math.random() * 3);
-        var critical = Math.floor(Math.random() * 2 + 0.1).toFixed(2);
+        const availableWeapons = [this.pistol, this.knife, this.shotgun]; 
+        
+        const randomIndex = Math.floor(Math.random() * availableWeapons.length);
+        const selectedWeapon = availableWeapons[randomIndex];
 
-        switch (number) {
-            case 0:
-                const atualDamagep = this.pistol * critical;
-                return atualDamagep;
-            break;
-            
-            case 1:
-                const atualDamagek = this.knife * critical;    
-                return atualDamagek;
-            break;
+        const critical =Math.round(0.5 + Math.random()); 
 
-            case 2:
-                const atualDamages = this.shotgun * critical;
-                return atualDamages;
-            break;
-        }
+        return Number((selectedWeapon * critical).toFixed(1));        
+        
     }
 };
