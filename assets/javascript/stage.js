@@ -101,7 +101,6 @@ class Stage{
     
     createEnemy(){
         var lifenemy = (this.number() + 10) * 3;
-
         enemyOne = new Enemy(lifenemy,lifenemy);
         this.lEl.innerHTML = `${logbatle[this.number()]}`;
         this.enEl.innerHTML = `${enemyOne.life}`;

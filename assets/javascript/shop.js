@@ -110,15 +110,22 @@ class Shop{
             case 'several':
                 let item = stage.allItems[dataEl];
                 if(playerOne.coin >= item.price){
+                    playerOne.coin -= item.price
                     item.amount++;
+                    this.update();
                 }
             break;
 
             case 'improvements':
-
+                let ability = playerOne.Ability[dataEl];
+                if(ability.status != true){
+                    if(playerOne.coin > ability.cust) {
+                        playerOne.coin -= ability.cust
+                        ability.upgrades(dataEl);
+                        this.update();
+                    };
+                }
             break;
         }
-
-        
     }
 }

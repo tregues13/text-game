@@ -11,6 +11,10 @@ const shotgun = new Weapon('shotgun',10,0.25,2.3,75,2,Infinity,Infinity);
 const machineGun = new Weapon('RifleA',3,0.33,2,115,4,Infinity,Infinity);
 const precisionRifle = new Weapon('Rifleb',25,0.50,2.5,175,5,Infinity,Infinity);
 
+const heavyVest = new Perk('Colete balistico',120);
+const eye = new Perk('Protese Optica',200);
+const revolverBarrel = new Perk('Cano alongado',150);
+
 const medic = new items('Medic',2,15);
 const stimulating = new items('stimulating',0,40);
 const defense = new items('Colete',0,30);

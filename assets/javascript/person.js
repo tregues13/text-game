@@ -25,9 +25,14 @@ class Player extends Person{
         this.pa = 0;
         this.maxDefense = 25;
         this.defense = this.maxDefense;
-
-        this.tempCritBonus = 0;
+        this.criticalBonus = 0;
+        this.tempCritBonus = this.criticalBonus;
         this.stimTurns = 0;
+        this.Ability= {
+            revolverBarrel,
+            eye,
+            heavyVest
+        };
     }
 
     shot(){
@@ -63,10 +68,14 @@ class Player extends Person{
                     break;
                 }
                 
-                if(this.stimTurns > 0){
+                if(stimulating.efect != false){
+                    if(this.stimTurns > 0){
                     this.stimTurns--;
-                }else{
-                    this.tempCritBonus = 0;
+                    }else{
+                        this.tempCritBonus = this.criticalBonus;
+                        stimulating.efect = false;
+                    }
+                    console.log('entrou1');
                 }
                 stage.battle();
             }
@@ -81,12 +90,37 @@ class Player extends Person{
     }
 };
 
+class Perk {
+    constructor(name,cust){
+        this.name = name;
+        this.cust = cust;
+        this.status = false;
+    }
+
+    upgrades(hability){
+        switch(hability){
+            case 'revolverBarrel':
+                pistol.damage = 10;
+            break;
+            case 'eye':
+                playerOne.criticalBonus = 0.15;
+                playerOne.tempCritBonus += playerOne.criticalBonus;
+                
+            break;
+            case 'heavyVest':
+                playerOne.maxDefense = 60;      
+            break;
+        }
+    }
+}
+
 class items {
     constructor(name,amount,price){
         this.name = name;
         this.amount = amount;
         this.price = price;
-        this.efect = false;   
+        this.efect = false;
+        this.critical = 0.35;  
     }
 
     healing(){
@@ -108,7 +142,7 @@ class items {
     useDrugs(){
         if(this.efect != true){
             this.amount --;
-            playerOne.tempCritBonus = 0.35;
+            playerOne.tempCritBonus += this.critical;
             playerOne.stimTurns = 2;
             this.efect = true;
         }
@@ -123,7 +157,7 @@ class inventory {
     }
 
     addInventory(weaponR){
-        this.weapons[weaponR] = stage.allWeapons[weaponR]; 
+        this.weapons[weaponR] = stage.allItems[weaponR]; 
     }
     
     reset(){
