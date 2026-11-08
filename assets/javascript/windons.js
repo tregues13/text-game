@@ -1,6 +1,7 @@
 class Windon{
     constructor(window){
         this.windowEl = window;
+        this.version = 'v1.0.0';
     }
 
     window(data){

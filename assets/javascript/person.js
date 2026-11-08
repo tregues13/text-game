@@ -28,7 +28,7 @@ class Player extends Person{
         this.criticalBonus = 0;
         this.tempCritBonus = this.criticalBonus;
         this.stimTurns = 0;
-        this.Ability= {
+        this.ability= {
             revolverBarrel,
             eye,
             heavyVest
@@ -91,10 +91,11 @@ class Player extends Person{
 };
 
 class Perk {
-    constructor(name,cust){
+    constructor(name,cust,descrepition){
         this.name = name;
-        this.cust = cust;
+        this.price = cust;
         this.status = false;
+        this.descrepition = descrepition;
     }
 
     upgrades(hability){
@@ -111,16 +112,18 @@ class Perk {
                 playerOne.maxDefense = 60;      
             break;
         }
+        this.status = true;
     }
 }
 
 class items {
-    constructor(name,amount,price){
+    constructor(name,amount,price,descrepition){
         this.name = name;
         this.amount = amount;
         this.price = price;
         this.efect = false;
-        this.critical = 0.35;  
+        this.critical = 0.35;
+        this.descrepition = descrepition;  
     }
 
     healing(){
@@ -169,7 +172,7 @@ class inventory {
 }
 
 class Weapon{
-    constructor(name,damage,criticalChance,criticalMultiplier,price,pa,maxAmmo,currentAmmo){
+    constructor(name,damage,criticalChance,criticalMultiplier,price,pa,maxAmmo,currentAmmo,descrepition,attackL){
         this.name = name;
         this.damage = damage;
         this.maxAmmo = maxAmmo;
@@ -178,11 +181,13 @@ class Weapon{
         this.criticalMultiplier = criticalMultiplier;
         this.price = price;
         this.paCust = pa;
+        this.descrepition = descrepition;
+        this.attackLog = attackL;
     }
 
     reloading(){
         this.currentAmmo = this.maxAmmo;
-        log.innerHTML += ` Enquanto você recarregava o atirador desfiriu um tiro em você, deu ${enemyOne.pistol} de dano!`;
+        log.innerHTML += ` Enquanto você recarregava o atirador desfiriu um ataque em você, deu ${enemyOne.pistol} de dano!`;
     }
 }
 
