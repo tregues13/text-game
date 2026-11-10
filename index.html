@@ -58,7 +58,7 @@
 
             <div id="log"></div>
             
-            <button class="restart action">reniciar</button>
+            <button class="restart action pause" data-pause="reset">reniciar</button>
         </div>
 
         <!--PLAYER FUNCTIONS-->
@@ -76,7 +76,7 @@
 
                     <div class="status-card">
                         DEFESA
-                        <span class="item" data-stats="def">0</span>
+                        <span class="item" data-stats="defense">0</span>
                     </div>
 
                     <div class="status-card">
@@ -86,12 +86,12 @@
 
                     <div class="status-card">
                         MUNIÇÃO
-                        <span class="item" data-stats="ammunition">0</span>
+                        <span class="item" data-stats="currentAmmo">0</span>
                     </div>
 
                     <div class="status-card">
                         BATERIAS
-                        <span class="item" data-stats="baterias">0</span>
+                        <span class="item" data-stats="coin">0</span>
                     </div>
 
                 </div>
@@ -99,14 +99,21 @@
             </div>
 
             <div class="division2">
-
-                <div id="menu-batlle">
+                
+                <div id="menu-batlle" class="grid-container">
                     <button class="action pause" data-pause="shop">SHOP</button>
                     <button class="action pause" data-pause="continue">CONTINUAR</button>
-                    <button class="action pause" data-pause="healing">TRATAR FERIDAS</button>
+                    <button class="action pause" data-pause="item">Inventory</button>
                 </div>
 
-                <div class="buttons">
+                <div id="menu-items" class="grid-container">
+                    <button class="action items" data-item="medic">Usar medic</button>
+                    <button class="action items" data-item="defense">Reparar Colete</button>
+                    <button class="action items" data-item="stimulating">Usar Estimulante</button>
+                    <button class="action pause" data-pause="back">Voltar</button>
+                </div>
+
+                <div class="buttons grid-container">
 
                     <button class="action reload">
                         RECARREGAR
@@ -116,11 +123,19 @@
                         PISTOLA
                     </button>
 
-                    <button class="action button lock" data-item="SHOTGUN">
+                    <button class="action button lock" data-item="shotgun">
                         ESCOPETA
                     </button>
 
-                    <button class="action button">
+                    <button class="action button lock" data-item="machineGun">
+                        Rifle automatico
+                    </button>
+
+                    <button class="action button lock" data-item="precisionRifle">
+                        Rifle de Precisão
+                    </button>
+
+                    <button class="action button" data-item="knife">
                         FACA TÁTICA
                     </button>
 
@@ -147,9 +162,9 @@
                     <span class="bateryshop">0</span>
                 </div>
                 <div class="sections">
-                    <div class="section select s1">Armas</div>
-                    <div class="section s2">diversos</div>
-                    <div class="section s3">Melhorias</div>
+                    <div class="section select" data-section="weapon">Armas</div>
+                    <div class="section" data-section="several">diversos</div>
+                    <div class="section" data-section="improvements">Melhorias</div>
                 </div>
                 <button class="action exit">Voltar para o menu</button>
                 <button class="action pause" data-pause="game-area">Continue</button>
@@ -160,145 +175,145 @@
             <div class="area-content">
                 <div class="slider">
                     <div class="weapons window">
-                            <div class="items-content">
+                            <div class="items-content" data-descrepition="shotgun">
                                 <div class="exibition">
-                                    <div class="arrow">
+                                    <div class="arrow" id="arrowshotgun">
                                         <div class="seta one"></div>
                                         <div class="seta two"></div>
                                     </div>
                                     <span>SHOTGUN</span>
-                                    <button class="action buy" data-buy="SHOTGUN" data-indenty="1">Comprar</button>
+                                    <button class="action buy" data-buy="shotgun" data-type="weapon">Comprar</button>
                                 </div>
-                                <div class="description">
+                                <div class="description" id="shotgun">
                                     <br>
                                     Uma arma de alto calibre capaz de destroçar seus inimigos, depois de um tiro dessa arma não queria, estar vivo no lugar do seu inimigo.
-                                    <p class="verification">50 baterias</p>
+                                    <p class="verification" data-ver="shotgun">75 baterias</p>
                                 </div>
                             </div>
-                             <div class="items-content">
+                             <div class="items-content" data-descrepition="machineGun">
                                 <div class="exibition">
-                                    <div class="arrow">
+                                    <div class="arrow" id="arrowmachineGun">
                                         <div class="seta one"></div>
                                         <div class="seta two"></div>
                                     </div>
                                     <span>Rifle Automatico</span>
-                                    <button class="action buy" data-buy="RifleA" data-indenty="1">Comprar</button>
+                                    <button class="action buy" data-buy="machineGun" data-type="weapon">Comprar</button>
                                 </div>
-                                <div class="description">
+                                <div class="description" id="machineGun">
                                     <br>
                                     Uma máquina de guerra construída para dominar o campo de batalha. Seu poder não está em um único disparo, mas na chuva incessante de balas que obriga qualquer inimigo a procurar abrigo. Quando este rifle começa a disparar, o silêncio do deserto desaparece junto com a esperança dos seus adversários.                                    
-                                    <p class="verification"> 100 baterias</p>
+                                    <p class="verification" data-ver="machineGun"> 125 baterias</p>
                                 </div>
                             </div>
-                            <div class="items-content">
+                            <div class="items-content" data-descrepition="precisionRifle">
                                 <div class="exibition">
-                                    <div class="arrow">
+                                    <div class="arrow" id="arrowprecisionRifle">
                                         <div class="seta one"></div>
                                         <div class="seta two"></div>
                                     </div>
                                     <span>Rifle De Precisão</span>
-                                    <button class="action buy" data-buy="Rifleb" data-indenty="1">Comprar</button>
+                                    <button class="action buy" data-buy="precisionRifle" data-type="weapon">Comprar</button>
                                 </div>
-                                <div class="description">
+                                <div class="description" id="precisionRifle">
                                     <br>
                                     Projetado para eliminar alvos antes mesmo que percebam o perigo. Seu longo alcance e precisão cirúrgica transformam cada disparo em uma sentença inevitável. Quando o estampido ecoa pelo deserto, alguém já caiu antes que a fumaça deixe o cano.
-                                    <p class="verification">150 baterias</p>
+                                    <p class="verification" data-ver="precisionRifle">175 baterias</p>
                                 </div>
                             </div>
                     </div>
                     
                     <div class="armo window">
-                        <div class="items-content">
+                        <div class="items-content" data-descrepition="defense">
                             <div class="exibition" >
-                                <div class="arrow">
+                                <div class="arrow" id="arrowdefense">
                                     <div class="seta one"></div>
                                     <div class="seta two"></div>
                                 </div>
                                 <span>Colete</span>
-                                <button class="action buy" data-buy="colete" data-indenty="2">Comprar</button>
+                                <button class="action buy" data-buy="defense" data-type="several">Comprar</button>
                             </div>
-                            <div class="description">
+                            <div class="description" id="defense">
                                 <br>
                                 "Construído com placas metálicas reaproveitadas e tecido reforçado, este colete foi feito para suportar o impossível. Pesado e desgastado pelo tempo, ainda é capaz de transformar um disparo fatal em apenas mais uma cicatriz."
-                                <p class="verification">50 baterias</p>
+                                <p class="verification" data-ver="defense">30 baterias</p>
                             </div>
                         </div>
-                            <div class="items-content">
+                            <div class="items-content" data-descrepition="medic">
                             <div class="exibition">
-                                <div class="arrow">
+                                <div class="arrow" id="arrowmedic">
                                     <div class="seta one"></div>
                                     <div class="seta two"></div>
                                 </div>
                                 <span>Kit medico</span>
-                                <button class="action buy"  data-buy="kit" data-indenty="2">Comprar</button>
+                                <button class="action buy"  data-buy="medic" data-type="several">Comprar</button>
                             </div>
-                            <div class="description">
+                            <div class="description" id="medic">
                                 <br>
                                 "Uma maleta enferrujada recheada de ataduras, estimulantes e remédios improvisados. Não faz milagres, mas pode ser a diferença entre morrer no deserto ou viver para enfrentar o próximo tiroteio."                                    
-                                <p class="verification"> 100 baterias</p>
+                                <p class="verification" data-ver="medic"> 40 baterias</p>
                             </div>
                         </div>
-                        <div class="items-content">
+                        <div class="items-content" data-descrepition="stimulating">
                             <div class="exibition" >
-                                <div class="arrow">
+                                <div class="arrow" id="arrowstimulating">
                                     <div class="seta one"></div>
                                     <div class="seta two"></div>
                                 </div>
                                 <span>Estimulante de batalha</span>
-                                <button class="action buy" data-buy="estimulante" data-indenty="2">Comprar</button>
+                                <button class="action buy" data-buy="stimulating" data-type="several">Comprar</button>
                             </div>
-                            <div class="description">
+                            <div class="description" id="stimulating">
                                 <br>
                                 "Um composto químico desenvolvido antes da queda do mundo e aperfeiçoado pelos mercadores do deserto. Ao ser injetado, desperta os músculos e acelera os reflexos, permitindo agir por mais tempo antes que o corpo cobre o preço."                                
-                                <p class="verification">150 baterias</p>
+                                <p class="verification" data-ver="stimulating">80 baterias</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="upgrades window">
-                        <div class="items-content">
+                        <div class="items-content" data-descrepition="revolverBarrel">
                             <div class="exibition">
-                                <div class="arrow">
+                                <div class="arrow" id="arrowrevolverBarrel">
                                     <div class="seta one"></div>
                                     <div class="seta two"></div>
                                 </div>
                                 <span>Cano de Revolver Alongado</span>
-                                <button class="action buy" data-buy="canoder" data-indenty="3">Comprar</button>
+                                <button class="action buy" data-buy="revolverBarrel" data-type="improvements">Comprar</button>
                             </div>
-                            <div class="description">
+                            <div class="description" id="revolverBarrel">
                                 <br>
                                 "Um cano de precisão que aumenta o dano e a estabilidade dos disparos do revólver."                                
-                                <p class="verification">50 baterias</p>
+                                <p class="verification" data-ver="revolverBarrel">150 baterias</p>
                             </div>
                         </div>
-                            <div class="items-content">
+                            <div class="items-content" data-descrepition="heavyVest">
                             <div class="exibition">
-                                <div class="arrow">
+                                <div class="arrow" id="arrowheavyVest">
                                     <div class="seta one"></div>
                                     <div class="seta two"></div>
                                 </div>
                                 <span>Colete Reforçado</span>
-                                <button class="action buy" data-buy="coleter" data-indenty="3">Comprar</button>
+                                <button class="action buy" data-buy="heavyVest" data-type="improvements">Comprar</button>
                             </div>
-                            <div class="description">
+                            <div class="description" id="heavyVest">
                                 <br>
-                                Uma máquina de guerra construída para dominar o campo de batalha. Seu poder não está em um único disparo, mas na chuva incessante de balas que obriga qualquer inimigo a procurar abrigo. Quando este rifle começa a disparar, o silêncio do deserto desaparece junto com a esperança dos seus adversários.                                    
-                                <p class="verification"> 100 baterias</p>
+                                Feito em couro espesso de búfalo, este colete esconde placas de aço batido sobre as áreas vitais. Ideal para tiroteios no deserto, amortece o impacto de balas e possui cartucheiras de engate rápido na frente para facilitar o recarregamento. É pesado e cheira a pólvora velha, mas é o preço a pagar para continuar vivo.                                    
+                                <p class="verification" data-ver="heavyVest"> 120 baterias</p>
                             </div>
                         </div>
-                        <div class="items-content">
+                        <div class="items-content" data-descrepition="eye">
                             <div class="exibition">
-                                <div class="arrow">
+                                <div class="arrow" id="arroweye">
                                     <div class="seta one"></div>
                                     <div class="seta two"></div>
                                 </div>
                                 <span>Implante de Olho</span>
-                                <button class="action buy" data-buy="olho" data-indenty="3">Comprar</button>
+                                <button class="action buy" data-buy="eye" data-type="improvements">Comprar</button>
                             </div>
-                            <div class="description">
+                            <div class="description" id="eye">
                                 <br>
                                 Projetado para eliminar alvos antes mesmo que percebam o perigo. Seu longo alcance e precisão cirúrgica transformam cada disparo em uma sentença inevitável. Quando o estampido ecoa pelo deserto, alguém já caiu antes que a fumaça deixe o cano.
-                                <p class="verification">150 baterias</p>
+                                <p class="verification" data-ver="eye">200 baterias</p>
                             </div>
                         </div>
                     </div>

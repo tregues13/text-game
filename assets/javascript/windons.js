@@ -1,6 +1,7 @@
 class Windon{
     constructor(window){
         this.windowEl = window;
+        this.version = 'v1.0.0';
     }
 
     window(data){
@@ -8,11 +9,15 @@ class Windon{
             element.style.display = 'none';
             let dataEl = element.dataset.area;
             if(data === dataEl){
+                
+                element.style.display = 'flex';
+
                 if(dataEl === 'game-area'){
-                    element.style.display = 'flex';
                     stage.startGame();
                 }
-                
+                else if(dataEl === 'shop'){
+                    shop.update();
+                }
             }            
         });
     }

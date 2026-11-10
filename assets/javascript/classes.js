@@ -4,7 +4,21 @@ const manipulationArea = new Windon(
     document.querySelectorAll('.windons'),
 )
 
-const pistol = new weapon('pistol',5,6,6,0.15,2);
+const pistol = new Weapon('pistol',5,0.15,2,0,0,6,6,'');
+const knife = new Weapon('knife',3,0.40,1.5,0,0,Infinity,Infinity,'');
+
+const shotgun = new Weapon('shotgun',10,0.25,2.3,75,2,Infinity,Infinity,'Um tiro disso de perto e não sobra nem osso pra contar história... a escopeta mais devastadora da região');
+const machineGun = new Weapon('RifleA',3,0.33,2,115,4,Infinity,Infinity,'Cospe chumbo quente mais rápido que um raio... a arma mais brutal e barulhenta da região');
+const precisionRifle = new Weapon('Rifleb',25,0.50,2.5,175,5,Infinity,Infinity,'Fura o crânio antes mesmo do desgraçado ouvir o estampido... o rifle de maior alcance e precisão da região');
+
+const heavyVest = new Perk('Colete balistico',120,'Aço puro rebitado no couro... o reforço mais impenetrável que o seu dinheiro compra na região!');
+const eye = new Perk('Protese Optica',200,'Vai doer um pouco para instalar, mas você nunca mais erra um tiro... o olho mais afiado e cobiçado da região!');
+const revolverBarrel = new Perk('Cano alongado',150,'Leva o chumbo mais longe e rasga com mais força... a modificação mais letal que vai encontrar na região');
+
+const medic = new items('Medic',2,15,'Isso não pode faltar na sua algibeira... o único curativo da região que te tira da cova!');
+const stimulating = new items('stimulating',0,40,'Um gole disso e você nem sente a dor... o tônico mais forte e perigoso da região!');
+const defense = new items('Colete',0,30,'Isso aqui salva vidas no meio do tiroteio... a melhor proteção de toda a região!');
+
 const inventorys = new inventory();
 
 const playerOne = new Player('cypher');
@@ -16,17 +30,24 @@ const stage = new Stage(
     document.querySelectorAll('.item'),
     document.querySelector('.reload'),
     document.querySelector('#menu-batlle'),
-    document.querySelector('.buttons')
+    document.querySelector('.buttons'),
+    document.querySelector('.player-panel')
 );
 
 const shop = new Shop(
     document.querySelector('.bateryshop'),
     document.querySelector('.slider'),
-    document.querySelectorAll('.buy')
+    document.querySelectorAll('.buy'),
+    document.querySelectorAll('.arrow'),
+    document.querySelectorAll('.description'),
+    document.querySelectorAll('.verification'),
+    document.querySelector('.shop-log')
 );
 
 let enemyOne;
 
+const action = document.querySelectorAll('.button');
+const section = document.querySelectorAll(".section")
 const logbatle = [
 "O vento levanta a poeira da estrada enquanto sua mão repousa sobre o cabo da arma. O desconhecido à sua frente cospe no chão e sorri de lado. Ninguém diz uma palavra. O próximo som pode ser um tiro.",
 "O silêncio das montanhas é quebrado por um estalo metálico. Antes que você consiga reagir, sombras surgem entre as rochas. Armas são apontadas em sua direção. Você caiu numa emboscada.",
@@ -56,10 +77,20 @@ document.querySelectorAll('.pause').forEach(element => {
                 stage.continue();
             break;
 
-            case 'healing':
-                playerOne.healing();
+            case 'reset':
+                stage.reset();
             break;
             
+            case 'item':
+                document.querySelector('#menu-batlle').style.display = 'none';
+                document.querySelector('#menu-items').style.display = 'flex';
+            break;
+
+            case 'back':
+            document.querySelector('#menu-batlle').style.display = 'flex';
+            document.querySelector('#menu-items').style.display = 'none';
+            break;
+
             default:
                 manipulationArea.window(pause)
             break;
@@ -67,15 +98,55 @@ document.querySelectorAll('.pause').forEach(element => {
     })
 })
 
-document.querySelectorAll('.button').forEach(element => {
-    element.addEventListener('click',() => {
-        let weapon = inventorys.weapons[element.dataset.item];
+document.querySelectorAll('.items').forEach(element =>{
+    element.addEventListener('click', () =>{
+        let dataI = element.dataset.item;
+        let object = stage.allItems[dataI];
         
-        stage.button = element;
-        stage.weapon = weapon;
+        if(object.amount > 0){            
+            switch(dataI){
+                case 'medic':
+                    medic.healing();
+                break;
 
-        playerOne.shot();
-        stage.updatabuttons();
-        stage.pause();
+                case 'defense':
+                    defense.repair();
+                break;
+
+                case 'stimulating':
+                    stimulating.useDrugs();
+                break;
+            }
+        }
+    })
+})
+
+action.forEach(element => {
+    element.addEventListener('click',() => {
+        if(playerOne._life > 0){
+            let weapon = inventorys.weapons[element.dataset.item];
+            
+            stage.button = element;
+            stage.weapon = weapon;
+
+            playerOne.shot();
+            stage.updatabuttons();
+            stage.pause();
+        }
     })
 });
+
+section.forEach(element =>{
+    element.addEventListener("click", () =>{
+        let data = element.dataset.section;
+        shop.section(data,element);
+    })
+})
+
+shop.buyEl.forEach(element => {
+    element.addEventListener('click', () => shop.buy(element));
+})
+
+document.querySelectorAll(".items-content").forEach(element => {
+    element.addEventListener("click", () => shop.products(element))
+})            
