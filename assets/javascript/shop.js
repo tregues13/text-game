@@ -14,6 +14,17 @@ class Shop{
             'Eu vendo armas, não faço caridade! Você precisa de mais dinheiro pra levar isso',
             'Bolsos vazios não compram sobrevivência, parceiro'
         ]
+        this.fullInventory = [
+            'Heh heh heh... Tá tentando ser o dono do monopólio, forasteiro? Eu já te vendi o último desse. E mesmo que eu tivesse, sua mochila biônica não aguenta carregar dois. Guarde seus créditos pra outra coisa...',
+            'Ganancioso, não é? Já te passei a última unidade dessa belezinha. Guarde seus créditos pra algo que ainda não esteja pendurado nesse seu cinto tático, chapa.',
+            'Acha que eu fabrico essas relíquias do velho mundo em impressora 3D? O que você tem aí é peça única no mercado agora, stranger. Escolha outra coisa.',
+            'Heh heh... Seus implantes ópticos estão com falha no visor? Você já comprou isso de mim. Não faço vendas em dobro, regras do sindicato dos sucateiros.'
+        ]
+    }
+
+    openToShop(){
+        this.log.innerHTML = 'Heh heh heh... Bem-vindo, forasteiro. O que vai levar hoje?';
+        this.update();
     }
 
     update(){
@@ -105,6 +116,7 @@ class Shop{
                                 inventorys.addInventory(dataB);
                             }
                         });
+                        item.status = true;
                         this.update();
                     }
                 }
@@ -127,22 +139,25 @@ class Shop{
                     if(playerOne.coin >= item.price) {
                         playerOne.coin -= item.price
                         item.upgrades(dataEl);
+                        item.status = true;
                         this.update();
                     };
                 } 
             break;
         }
-        //this.logShop(item);
+        
     }
 
     logShop(item){
-        //Corrigir a busca se contem o item comprado para o log
-        if(item.status == true || inventory.weapons[item.name] == undefined){
-            this.log.innerHTML = 'Seu cavalo não aguenta carregar dois desses, forasteiro. Tente gastar sua prata com outra coisa';
+        
+        let number = Math.floor(Math.random() * 4);
+
+        if(item.status == true){
+            console.log('entrou')
+            this.log.innerHTML = `${this.fullInventory[number]}`;
         }else if(item.descrepition !== undefined){
             this.log.innerHTML = `${item.descrepition}`;
-        } else{
-            let number = Math.floor(Math.random() * 4);
+        }else{    
             this.log.innerHTML = `${this.notCoin[number]}`;
         }
     }

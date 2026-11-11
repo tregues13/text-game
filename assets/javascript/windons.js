@@ -16,7 +16,7 @@ class Windon{
                     stage.startGame();
                 }
                 else if(dataEl === 'shop'){
-                    shop.update();
+                    shop.openToShop();
                 }
             }            
         });

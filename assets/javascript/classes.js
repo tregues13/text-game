@@ -4,12 +4,40 @@ const manipulationArea = new Windon(
     document.querySelectorAll('.windons'),
 )
 
-const pistol = new Weapon('pistol',5,0.15,2,0,0,6,6,'');
-const knife = new Weapon('knife',3,0.40,1.5,0,0,Infinity,Infinity,'');
+const pistol = new Weapon('pistol',5,0.15,2,0,0,
+    6,
+    6,
+    '',
+    '',
+    true
+);
+const knife = new Weapon('knife',3,0.40,1.5,0,0,
+    Infinity,
+    Infinity,
+    '',
+    '',
+    true
+);
 
-const shotgun = new Weapon('shotgun',10,0.25,2.3,75,2,Infinity,Infinity,'Um tiro disso de perto e não sobra nem osso pra contar história... a escopeta mais devastadora da região');
-const machineGun = new Weapon('RifleA',3,0.33,2,115,4,Infinity,Infinity,'Cospe chumbo quente mais rápido que um raio... a arma mais brutal e barulhenta da região');
-const precisionRifle = new Weapon('Rifleb',25,0.50,2.5,175,5,Infinity,Infinity,'Fura o crânio antes mesmo do desgraçado ouvir o estampido... o rifle de maior alcance e precisão da região');
+const shotgun = new Weapon('shotgun',10,0.25,2.3,75,2,
+    Infinity,
+    Infinity,
+    'Um tiro disso de perto e não sobra nem osso pra contar história... a escopeta mais devastadora da região',
+    '',
+    false
+);
+const machineGun = new Weapon('RifleA',3,0.33,2,115,4,
+    Infinity,
+    Infinity,
+    'Cospe chumbo quente mais rápido que um raio... a arma mais brutal e barulhenta da região',
+    '',
+    false
+);
+const precisionRifle = new Weapon('Rifleb',25,0.50,2.5,175,5,Infinity,Infinity,
+    'Fura o crânio antes mesmo do desgraçado ouvir o estampido... o rifle de maior alcance e precisão da região',
+    '',
+    false
+);
 
 const heavyVest = new Perk('Colete balistico',120,'Aço puro rebitado no couro... o reforço mais impenetrável que o seu dinheiro compra na região!');
 const eye = new Perk('Protese Optica',200,'Vai doer um pouco para instalar, mas você nunca mais erra um tiro... o olho mais afiado e cobiçado da região!');

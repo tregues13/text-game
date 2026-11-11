@@ -172,7 +172,7 @@ class inventory {
 }
 
 class Weapon{
-    constructor(name,damage,criticalChance,criticalMultiplier,price,pa,maxAmmo,currentAmmo,descrepition,attackL){
+    constructor(name,damage,criticalChance,criticalMultiplier,price,pa,maxAmmo,currentAmmo,descrepition,attackL,status){
         this.name = name;
         this.damage = damage;
         this.maxAmmo = maxAmmo;
@@ -183,6 +183,7 @@ class Weapon{
         this.paCust = pa;
         this.descrepition = descrepition;
         this.attackLog = attackL;
+        this.status = status;
     }
 
     reloading(){
